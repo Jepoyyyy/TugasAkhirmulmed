@@ -37,7 +37,7 @@ var OBJECT_PLAYER = 1,
 var startGame = function() {
   var ua = navigator.userAgent.toLowerCase();
 
-  // Only 1 row of stars
+  
   if(ua.match(/android/)) {
     Game.setBoard(0,new Starfield(50,0.6,100,true));
   } else {
@@ -65,7 +65,7 @@ var level1 = [
 ];
 
 
-
+// Pengaturan board permainan
 var playGame = function() {
   var board = new GameBoard();
   board.add(new PlayerShip());
@@ -74,12 +74,14 @@ var playGame = function() {
   Game.setBoard(5,new GamePoints(0));
 };
 
+// Tulisan apabila menang
 var winGame = function() {
   Game.setBoard(3,new TitleScreen("Kamu Menang!", 
                                   "Klik Spasi Untuk Memulai",
                                   playGame));
 };
 
+// Tulisan apabila kalah
 var loseGame = function() {
   Game.setBoard(3,new TitleScreen("Kamu Kalah!", 
                                   "Klik Spasi Untuk Memulai",
@@ -88,7 +90,7 @@ var loseGame = function() {
 
 var Starfield = function(speed,opacity,numStars,clear) {
 
-  // Set up the offscreen canvas
+  
   var stars = document.createElement("canvas");
   stars.width = Game.width; 
   stars.height = Game.height;
@@ -190,6 +192,7 @@ var PlayerMissile = function(x,y) {
 PlayerMissile.prototype = new Sprite();
 PlayerMissile.prototype.type = OBJECT_PLAYER_PROJECTILE;
 
+// function tentang tabrakan antara peluru dan musuh 
 PlayerMissile.prototype.step = function(dt)  {
   this.y += this.vy * dt;
   var collision = this.board.collide(this,OBJECT_ENEMY);
@@ -201,7 +204,7 @@ PlayerMissile.prototype.step = function(dt)  {
   }
 };
 
-
+// mengatur sifat general dari enemy
 var Enemy = function(blueprint,override) {
   this.merge(this.baseParameters);
   this.setup(blueprint.sprite,blueprint);
@@ -211,11 +214,13 @@ var Enemy = function(blueprint,override) {
 Enemy.prototype = new Sprite();
 Enemy.prototype.type = OBJECT_ENEMY;
 
+// mengatur tentang kecepatan reload dan waktu tembak
 Enemy.prototype.baseParameters = { A: 0, B: 0, C: 0, D: 0, 
                                    E: 0, F: 0, G: 0, H: 0,
-                                   t: 0, reloadTime: 0.75, 
-                                   reload: 0 };
+                                   t: 0, reloadTime: 1.5, 
+                                   reload: 0.75 };
 
+// logika pergerakan musuh                                   
 Enemy.prototype.step = function(dt) {
   this.t += dt;
 
@@ -225,6 +230,7 @@ Enemy.prototype.step = function(dt) {
   this.x += this.vx * dt;
   this.y += this.vy * dt;
 
+  // mengatur tabrakan antara objek enemy dan player
   var collision = this.board.collide(this,OBJECT_PLAYER);
   if(collision) {
     collision.hit(this.damage);
