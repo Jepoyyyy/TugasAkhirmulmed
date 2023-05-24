@@ -1,3 +1,9 @@
+// TUGAS BESAR MULTIMEDIA KELAS
+// Manuel Zefanya Pardede (21120121140105)
+// Dewangkara Yoga Setyawan (21120121140035)
+// Dimas Victo Purwantomo (21120121140149)
+
+
 var sprites = {
  ship: { sx: 0, sy: 0, w: 37, h: 42, frames: 1 },
  missile: { sx: 0, sy: 30, w: 2, h: 10, frames: 1 },
@@ -39,8 +45,8 @@ var startGame = function() {
     Game.setBoard(1,new Starfield(50,0.4,100));
     Game.setBoard(2,new Starfield(100,0.6,50));
   }  
-  Game.setBoard(3,new TitleScreen("Tugas Akhir", 
-                                  "Tekan Spasi untuk memulai",
+  Game.setBoard(3,new TitleScreen("Serangan Alien", 
+                                  "Yoga,Manuel,Dimas",
                                   playGame));
 
   
@@ -69,14 +75,14 @@ var playGame = function() {
 };
 
 var winGame = function() {
-  Game.setBoard(3,new TitleScreen("You win!", 
-                                  "Press fire to play again",
+  Game.setBoard(3,new TitleScreen("Kamu Menang!", 
+                                  "Klik Spasi Untuk Memulai",
                                   playGame));
 };
 
 var loseGame = function() {
-  Game.setBoard(3,new TitleScreen("You lose!", 
-                                  "Press fire to play again",
+  Game.setBoard(3,new TitleScreen("Kamu Kalah!", 
+                                  "Klik Spasi Untuk Memulai",
                                   playGame));
 };
 

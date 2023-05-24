@@ -1,3 +1,9 @@
+// TUGAS BESAR MULTIMEDIA KELAS
+// Manuel Zefanya Pardede (21120121140105)
+// Dewangkara Yoga Setyawan (21120121140035)
+// Dimas Victo Purwantomo (21120121140149)
+
+
 (function() {
     var lastTime = 0;
     var vendors = ['ms', 'moz', 'webkit', 'o'];
