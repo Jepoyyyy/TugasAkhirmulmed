@@ -214,13 +214,13 @@ var Enemy = function(blueprint,override) {
 Enemy.prototype = new Sprite();
 Enemy.prototype.type = OBJECT_ENEMY;
 
-// mengatur tentang kecepatan reload dan waktu tembak
+// mengatur tentang kecepatan reload dan waktu tembak enemy
 Enemy.prototype.baseParameters = { A: 0, B: 0, C: 0, D: 0, 
                                    E: 0, F: 0, G: 0, H: 0,
                                    t: 0, reloadTime: 1.5, 
                                    reload: 0.75 };
 
-// logika pergerakan musuh                                   
+// Logika pergerakan musuh                                   
 Enemy.prototype.step = function(dt) {
   this.t += dt;
 
@@ -230,13 +230,13 @@ Enemy.prototype.step = function(dt) {
   this.x += this.vx * dt;
   this.y += this.vy * dt;
 
-  // mengatur tabrakan antara objek enemy dan player
+  // Mengatur tabrakan antara objek enemy dan player
   var collision = this.board.collide(this,OBJECT_PLAYER);
   if(collision) {
     collision.hit(this.damage);
     this.board.remove(this);
   }
-
+  // Mengatur Tembakan enemy
   if(Math.random() < 0.01 && this.reload <= 0) {
     this.reload = this.reloadTime;
     if(this.missiles == 2) {
@@ -249,6 +249,7 @@ Enemy.prototype.step = function(dt) {
   }
   this.reload-=dt;
 
+  // Mengatur batas dari enemy 
   if(this.y > Game.height ||
      this.x < -this.w ||
      this.x > Game.width) {
@@ -256,6 +257,7 @@ Enemy.prototype.step = function(dt) {
   }
 };
 
+// Hit ke enemy serta memberikan efek explosion
 Enemy.prototype.hit = function(damage) {
   this.health -= damage;
   if(this.health <=0) {
@@ -267,15 +269,18 @@ Enemy.prototype.hit = function(damage) {
   }
 };
 
+// Kekuatan serangan enemy
 var EnemyMissile = function(x,y) {
   this.setup('enemy_missile',{ vy:200, damage: 10 });
   this.x = x - this.w/2;
   this.y = y;
 };
 
+// Mengambil peluru enemu
 EnemyMissile.prototype = new Sprite();
 EnemyMissile.prototype.type = OBJECT_ENEMY_PROJECTILE;
 
+// Mencek terjadinya tabrakan antara peluru enemy dan player
 EnemyMissile.prototype.step = function(dt)  {
   this.y += this.vy * dt;
   var collision = this.board.collide(this,OBJECT_PLAYER)
@@ -288,21 +293,24 @@ EnemyMissile.prototype.step = function(dt)  {
 };
 
 
-
+// Mengatur letak terjadinya ledakan
 var Explosion = function(centerX,centerY) {
   this.setup('explosion', { frame: 0 });
   this.x = centerX - this.w/2;
   this.y = centerY - this.h/2;
 };
 
+// Mengambil objek ledakan
 Explosion.prototype = new Sprite();
 
+// Mengatur tentang waktu dan luas ledakan
 Explosion.prototype.step = function(dt) {
   this.frame++;
   if(this.frame >= 12) {
     this.board.remove(this);
   }
 };
+
 
 window.addEventListener("load", function() {
   Game.initialize("game",sprites,startGame);

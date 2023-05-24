@@ -82,6 +82,7 @@ var Game = new function() {
 
   var lastTime = new Date().getTime();
   var maxTime = 1/30;
+  
   // Game Loop
   this.loop = function() { 
     var curTime = new Date().getTime();
@@ -98,7 +99,7 @@ var Game = new function() {
     lastTime = curTime;
   };
   
-  // Change an active game board
+  // Menyesuaikan board mana yang digunakan
   this.setBoard = function(num,board) { boards[num] = board; };
 
 
